@@ -1,4 +1,7 @@
 <?php
+session_start();
+?>
+<?php
    define('DB_SERVER', 'localhost');
    define('DB_USERNAME', 'root');
    define('DB_PASSWORD', 'Samdar');
@@ -9,10 +12,11 @@
       $myusername = mysqli_real_escape_string($db,$_POST['usr']);
       $mypassword = mysqli_real_escape_string($db,$_POST['pwd']); 
       
-      $sql = "SELECT * FROM login WHERE enroll = '$myusername' and passwd = '$mypassword'";
+      $sql = "SELECT * FROM info WHERE Enrollno = '$myusername' and password = '$mypassword'";
       $result = mysqli_query($db,$sql);
       $count = mysqli_num_rows($result);
       if($count == 1) {
+         $_SESSION["name"] = $myusername;
          header("location: php/homein.php");
       }else {
          $error="Invalid username or password";
@@ -40,12 +44,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>  
       </button>
-      <a class="navbar-brand" href="#">WebSiteName</a>
+      <a class="navbar-brand" href="#">Studez</a>
     </div>
     <div class="collapse navbar-collapse" id="nav">
     <span class="nav navbar-nav"><a href ="php/login.php"><button class="btn btn-danger"><span class="glyphicon glyphicon-education"></span>Register Now</button></a></span>
     <form action="" method="post" class="navbar-form navbar-right">
-      <input type=text placeholder="Enter enrollment no." name=usr class="form-control" required>
+      <input type=number placeholder="Enter enrollment no." name=usr class="form-control" required>
 	  <input type=password placeholder="Enter password" name=pwd class="form-control" required>
 	  <button class="btn btn-success"><span class="glyphicon glyphicon-log-in"></span> Sign In</button>
     <span style = "font-size:15px; color:#cc0000; margin-top:10px"><?php echo $error; ?></span>
@@ -58,8 +62,8 @@
 
 <!--First Parallax-->
 <div class="bgimg-1" id="home">
-  <div class="w3-display-middle" style="white-space:nowrap;">
-		MY WEBSITE LOGO
+  <div class="w3-display-middle center" style="white-space:nowrap;">
+		Studez <br> Making study easier!!
   </div>
 </div>
 
@@ -78,10 +82,10 @@
 <div class="block">
 <h3 class="center">Here are some of the running groups</h3>
 <div class="center">
-<img src="images/g1.jpg" class="grps" alt="Electrodynamiocs and Optics" title="Electrodynamiocs and Optics">
-<img src="images/g2.jpeg" class="grps" alt="Mathematics" title="Mathematics">
-<img src="images/g3.jpg" class="grps" alt="Introduction to Electrical Engineering" title="Introduction to Electrical Engineering">
-<img src="images/g4.jpg" class="grps" alt="Introduction to Object Oriented Programming-Java" title="Introduction to Object Oriented Programming-Java">
+<img src="images/g1.jpg" class="grps" alt="Mathematical Methods" title="Mathematical Methods">
+<img src="images/g3.jpg" class="grps" alt="Fundamental of Electronics" title="Fundamental of Electronics">
+<img src="images/g2.JPG" class="grps" alt="Quantum Mechanics and Statistical Mechanics" title="Quantum Mechanics and Statistical Mechanics">
+<img src="images/g4.jpg" class="grps" alt="Electrical Measurement and Measuring Instruments" title="Electrical Measurement and Measuring Instruments">
 </div>
 </div>
 <!-- Third Parallax Image-->
@@ -94,7 +98,7 @@
 <div class="col-sm-4"></div>
 <div class="col-sm-4">
   <form method="post" action="">
-  <input type=text placeholder="Enter enrollment no." name="usr" class="form-control" required><br>
+  <input type=number placeholder="Enter enrollment no." name="usr" class="form-control" required><br>
   <input type="password" name="pwd" placeholder="Enter password" class="form-control" required><br>
   <center><button type=submit class="btn-lg btn-primary">Sign In</button></center></form>
   <center><div><span style = "font-size:15px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div></center><br>
@@ -106,14 +110,14 @@
 <footer class="center foot">
   <a href="#home"><button class="btn-lg"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</button></a>
   <div class="items">
-    <i class="fa fa-facebook-official"></i>
+    <i class="fa fa-facebook-official hover"></i>
     <i class="fa fa-instagram hover"></i>
     <i class="fa fa-snapchat hover"></i>
     <i class="fa fa-pinterest-p hover"></i>
     <i class="fa fa-twitter hover"></i>
     <i class="fa fa-linkedin hover"></i>
   </div>
-  <h4>&copy; 2017 by WebsiteName.</h4>
+  <h4>&copy; 2017 by Studez.</h4>
 </footer>
 
 <script>

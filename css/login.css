@@ -1,7 +1,6 @@
 body{
 	margin: 5px;
 	background-image: url("../images/login.jpg");
-	background-repeat: no-repeat;
 	background-size: cover;
 }
 .error{
@@ -15,5 +14,8 @@ body{
 .navbar-brand:hover{
 	color:#adf58b;
 }
-
-
+.tab{
+	color:white;
+	font-size: 1.5em;
+	font-style: bold;
+}
