@@ -1,4 +1,7 @@
 <?php
+session_start();
+?>
+<?php
 function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
@@ -12,15 +15,11 @@ $enroll = test_input($_POST["enroll"]);
 $pass = test_input($_POST["password"]);
 $lname=test_input($_POST["lname"]);
 $course1 = test_input($_POST["course1"]);
-$p1 = test_input($_POST["p1"]);
 $course2=test_input($_POST["course2"]);
-$p2=test_input($_POST["p2"]);
 $course3=test_input($_POST["course3"]);
-$p3=test_input($_POST["p3"]);
 $course4=test_input($_POST["course4"]);
-$p4=test_input($_POST["p4"]);
 $course5=test_input($_POST["course5"]);
-$p5=test_input($_POST["p5"]);
+$course6=test_input($_POST["course6"]);
 
 //storing data
 $servername = "localhost";
@@ -33,23 +32,97 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());}
-
-$sql = "INSERT INTO info(Fname, Lname, Branch, Email, Enrollno , password,course1 ,proff1 ,course2 ,proff2 ,course3 ,proff3 ,course4 ,proff4 ,course5 ,proff5)
-VALUES ('$fname','$lname','$branch','$email','$enroll','$pass','$course1','$p1','$course2','$p2','$course3','$p3','$course4','$p4','$course5','$p5')";
+$s="CREATE TABLE `$enroll` ( files VARCHAR (100) , enrollno INT (11) ) ";
+$sql = "INSERT INTO info(Fname, Lname, Branch, Email, Enrollno , password,course1 ,course2 ,course3 ,course4 ,course5 ,course6)
+VALUES ('$fname','$lname','$branch','$email','$enroll','$pass','$course1','$course2','$course3','$course4','$course5','$course6')";
 $sql2 = "INSERT INTO login(enroll , passwd) VALUES ('$enroll','$pass')";
-if (mysqli_query($conn, $sql)) {
-    echo "You are registered successfully";
+$sql3=" INSERT INTO `$branch`(Enrollno,course1,course2,course3,course4,course5,course6) VALUES ('$enroll','$course1','$course2','$course3','$course4','$course5','$course6')";
+$sql4="INSERT INTO `$course1`(files , enrollno) VALUES (' ' ,'$enroll')";
+$sql5="INSERT INTO `$course2`(files , enrollno) VALUES (' ' ,'$enroll')";
+$sql6="INSERT INTO `$course3`(files , enrollno) VALUES (' ' ,'$enroll')";
+$sql7="INSERT INTO `$course4`(files , enrollno) VALUES (' ' ,'$enroll')";
+$sql8="INSERT INTO `$course5`(files , enrollno) VALUES (' ' ,'$enroll')";
+$sql9="INSERT INTO `$course6`(files , enrollno) VALUES (' ' ,'$enroll')";
+$error="";
+if (mysqli_query($conn, $s)) {
+    echo "Table created successfully";
 } else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    echo "register again";
+    echo "Error creating table: " . mysqli_error($conn);
 }
-
-if (mysqli_query($conn, $sql2)) {
-    echo "You are kjhkj successfully";
+if (mysqli_query($conn, $sql)) {
+    $_SESSION["name"] = $enroll;
+    header("location:homein.php");
 } else {
-    echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
-    echo "hgnk again";
+    $error="There is some problem in data. \n This may be due to incorrect enrollment number or you may have already registered. ";
+}
+if (mysqli_query($conn, $sql2)) {
+    header("location:homein.php");
+} else {
+    $error="There is some problem in data. \n This may be due to incorrect enrollment number<br> or you may have already registered. ";
+}
+if (mysqli_query($conn, $sql3)) {
+    header("location:homein.php");
+} else {
+    $error="There is some problem in data. \n This may be due to incorrect enrollment number or you may have already registered. ";
+}
+if (mysqli_query($conn, $sql4)) {
+    header("location:homein.php");
+} else {
+    
+}
+if (mysqli_query($conn, $sql5)) {
+    header("location:homein.php");
+} else {
+
+}
+if (mysqli_query($conn, $sql6)) {
+    header("location:homein.php");
+} else {
+ 
+}
+if (mysqli_query($conn, $sql7)) {
+    header("location:homein.php");
+} else {
+
+}
+if (mysqli_query($conn, $sql8)) {
+    header("location:homein.php");
+} else {
+
+}
+if (mysqli_query($conn, $sql9)) {
+    header("location:homein.php");
+} else {
+
 }
 mysqli_close($conn);
 
 ?>
+<html>
+  <head>
+    <title>
+      Oops!! Something went wrong
+    </title>
+    <style type="text/css">
+      body{
+        background-image: url('../images/e2.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      .error{
+        position:absolute;
+        top:40%;
+        left: 40%;
+        right:45%;
+        transform:translate(-50%,-50%);
+        -ms-transform:translate(-50%,-50%);
+        font-size: 30px;
+        color:red;
+        font-weight: bold;
+}
+    </style>
+</head>
+<body>
+<?php echo "<span class=error>".$error."</span>";?>
+</body>
+</html>
